@@ -1,0 +1,5 @@
+{
+  "name": "Simple Road Admin",
+  "description": "Admin panel for Simple Road educational app. Manage user premium access and verify payment receipts.",
+  "requestFramePermissions": []
+}
