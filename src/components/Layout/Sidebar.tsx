@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom';
 import { LayoutDashboard, Users, CreditCard, Settings, LogOut, GraduationCap } from 'lucide-react';
 import { cn } from '@/src/lib/utils';
 import { useAuth } from '@/src/context/AuthContext';
+import { useToast } from '@/src/components/ui/Toast';
 
 interface SidebarProps {
   isOpen: boolean;
@@ -18,6 +19,12 @@ const navItems = [
 
 export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
   const { logout } = useAuth();
+  const { showToast } = useToast();
+
+  const handleLogout = () => {
+    logout();
+    showToast('Logged out successfully', 'info');
+  };
 
   return (
     <>
@@ -74,7 +81,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
           {/* Logout */}
           <div className="p-4 border-t border-slate-100">
             <button
-              onClick={logout}
+              onClick={handleLogout}
               className="flex items-center gap-3 w-full px-4 py-2.5 rounded-lg text-sm font-medium text-rose-600 hover:bg-rose-50 transition-all"
             >
               <LogOut className="w-5 h-5" />

@@ -1,14 +1,21 @@
 import React from 'react';
-import { Menu, Bell, Search, User } from 'lucide-react';
+import { Menu, Bell, Search, User, LogOut } from 'lucide-react';
 import { useAuth } from '@/src/context/AuthContext';
 import { Button } from '@/src/components/ui/Common';
+import { useToast } from '@/src/components/ui/Toast';
 
 interface NavbarProps {
   onMenuClick: () => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({ onMenuClick }) => {
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
+  const { showToast } = useToast();
+
+  const handleLogout = () => {
+    logout();
+    showToast('Logged out successfully', 'info');
+  };
 
   return (
     <header className="sticky top-0 z-30 w-full h-16 bg-white/80 backdrop-blur-md border-b border-slate-200">
@@ -50,6 +57,18 @@ export const Navbar: React.FC<NavbarProps> = ({ onMenuClick }) => {
               <User className="w-6 h-6 text-indigo-600" />
             </div>
           </div>
+
+          <div className="h-8 w-px bg-slate-200 mx-1 hidden sm:block" />
+
+          <Button 
+            variant="ghost" 
+            size="sm" 
+            onClick={handleLogout}
+            className="p-2 h-auto text-slate-500 hover:text-rose-600 hover:bg-rose-50 transition-all"
+            title="Logout"
+          >
+            <LogOut className="w-5 h-5" />
+          </Button>
         </div>
       </div>
     </header>
