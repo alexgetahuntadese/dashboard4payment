@@ -12,14 +12,13 @@ import { Dashboard } from './pages/Dashboard';
 import { UsersPage } from './pages/UsersPage';
 import { PaymentsPage } from './pages/PaymentsPage';
 import { SettingsPage } from './pages/SettingsPage';
+import { LoginPage } from './pages/LoginPage';
 
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { isAuthenticated } = useAuth();
   
   if (!isAuthenticated) {
-    // For demo purposes, we'll just auto-login if no token exists
-    // In a real app, this would redirect to /login
-    return <>{children}</>;
+    return <Navigate to="/login" replace />;
   }
 
   return <>{children}</>;
@@ -28,6 +27,7 @@ const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) =
 function AppRoutes() {
   return (
     <Routes>
+      <Route path="/login" element={<LoginPage />} />
       <Route path="/" element={<ProtectedRoute><Layout /></ProtectedRoute>}>
         <Route index element={<Dashboard />} />
         <Route path="users" element={<UsersPage />} />

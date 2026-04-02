@@ -3,7 +3,7 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 interface AuthContextType {
   token: string | null;
   user: { name: string; email: string; role: string } | null;
-  login: (token: string) => void;
+  login: (username: string, password: string) => boolean;
   logout: () => void;
   isAuthenticated: boolean;
 }
@@ -27,9 +27,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   }, [token]);
 
-  const login = (newToken: string) => {
-    localStorage.setItem('admin_token', newToken);
-    setToken(newToken);
+  const login = (username: string, password: string): boolean => {
+    if (username === 'admin' && password === 'admin') {
+      const mockToken = 'mock_jwt_token_' + Math.random().toString(36).substring(7);
+      localStorage.setItem('admin_token', mockToken);
+      setToken(mockToken);
+      return true;
+    }
+    return false;
   };
 
   const logout = () => {
