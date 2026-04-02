@@ -3,6 +3,7 @@ import { Search, Trash2, Eye, ChevronLeft, ChevronRight, MoreVertical } from 'lu
 import { Card, Button, Input } from '@/src/components/ui/Common';
 import { Modal } from '@/src/components/ui/Modal';
 import { useToast } from '@/src/components/ui/Toast';
+import { cn } from '@/src/lib/utils';
 
 interface User {
   id: string;
@@ -176,14 +177,31 @@ export const UsersTable: React.FC<UsersTableProps> = ({ users, onDelete, isLoadi
                 <p className="text-sm font-medium text-slate-900">{selectedUser.phone}</p>
               </div>
               <div className="p-3 bg-slate-50 rounded-lg">
-                <p className="text-xs text-slate-500 uppercase font-semibold">Status</p>
-                <p className="text-sm font-medium text-slate-900 capitalize">{selectedUser.status}</p>
+                <p className="text-xs text-slate-500 uppercase font-semibold">Access Status</p>
+                <div className="flex items-center gap-2 mt-1">
+                  <div className={cn("w-2 h-2 rounded-full", selectedUser.isPremium ? "bg-emerald-500" : "bg-slate-300")} />
+                  <p className="text-sm font-medium text-slate-900">{selectedUser.isPremium ? 'Premium' : 'Free'}</p>
+                </div>
               </div>
               <div className="p-3 bg-slate-50 rounded-lg col-span-2">
                 <p className="text-xs text-slate-500 uppercase font-semibold">Registration Date</p>
                 <p className="text-sm font-medium text-slate-900">{selectedUser.registrationDate}</p>
               </div>
             </div>
+
+            {selectedUser.isPremium && (
+              <div className="space-y-2">
+                <p className="text-xs text-slate-500 uppercase font-semibold">Latest Verified Receipt</p>
+                <div className="relative aspect-video bg-slate-100 rounded-xl overflow-hidden border border-slate-200">
+                  <img 
+                    src={`https://picsum.photos/seed/${selectedUser.id}/800/400`} 
+                    alt="Latest Receipt" 
+                    className="w-full h-full object-cover"
+                    referrerPolicy="no-referrer"
+                  />
+                </div>
+              </div>
+            )}
             <div className="flex justify-end pt-4">
               <Button variant="secondary" onClick={() => setSelectedUser(null)}>
                 Close

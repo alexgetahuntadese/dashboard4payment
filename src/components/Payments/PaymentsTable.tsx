@@ -89,6 +89,7 @@ export const PaymentsTable: React.FC<PaymentsTableProps> = ({ payments, onVerify
         <table className="w-full text-left border-collapse">
           <thead>
             <tr className="bg-slate-50/50">
+              <th className="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">Receipt</th>
               <th className="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">Reference</th>
               <th className="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">User Phone</th>
               <th className="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">Amount (ETB)</th>
@@ -102,7 +103,7 @@ export const PaymentsTable: React.FC<PaymentsTableProps> = ({ payments, onVerify
             {isLoading ? (
               Array.from({ length: 5 }).map((_, i) => (
                 <tr key={i} className="animate-pulse">
-                  <td colSpan={7} className="px-6 py-4">
+                  <td colSpan={8} className="px-6 py-4">
                     <div className="h-4 bg-slate-100 rounded w-full" />
                   </td>
                 </tr>
@@ -110,6 +111,19 @@ export const PaymentsTable: React.FC<PaymentsTableProps> = ({ payments, onVerify
             ) : paginatedPayments.length > 0 ? (
               paginatedPayments.map((payment) => (
                 <tr key={payment.id} className="hover:bg-slate-50/50 transition-colors">
+                  <td className="px-6 py-4">
+                    <div 
+                      className="w-10 h-10 rounded-lg bg-slate-100 border border-slate-200 overflow-hidden cursor-pointer hover:ring-2 hover:ring-indigo-500 transition-all"
+                      onClick={() => setSelectedPayment(payment)}
+                    >
+                      <img 
+                        src={payment.receiptUrl} 
+                        alt="Receipt" 
+                        className="w-full h-full object-cover"
+                        referrerPolicy="no-referrer"
+                      />
+                    </div>
+                  </td>
                   <td className="px-6 py-4 text-sm font-mono text-slate-900">{payment.reference}</td>
                   <td className="px-6 py-4 text-sm text-slate-600">{payment.userPhone}</td>
                   <td className="px-6 py-4 text-sm font-semibold text-slate-900">{payment.amount.toLocaleString()} ETB</td>

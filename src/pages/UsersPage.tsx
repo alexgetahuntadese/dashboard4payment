@@ -12,6 +12,7 @@ const generateMockUsers = () => {
     name: ['John Doe', 'Jane Smith', 'Alex Johnson', 'Sarah Williams', 'Michael Brown'][i % 5],
     email: `user${i}@example.com`,
     status: Math.random() > 0.2 ? 'active' : 'inactive' as const,
+    isPremium: Math.random() > 0.5,
   }));
 };
 
